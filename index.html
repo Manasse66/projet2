@@ -2,105 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>my_LAVAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>MY LAVAGE</title>
 </head>
-    <link href="style.css" rel="stylesheet">
 <body>
-        <div class="ble">
-            <div>
-                <img src="img/134.jpg" alt="logo car" width="120"  style="float: left;">
-                <p>My_LAVAGE</p>
-            </div>
-            <hr>
-
-        </div>
-        <header  class="fafa">
-        <div class="za">
-            <a href="#section1" title="accueil" class="zi">accueil</a>
-            <a href="#section2" title="service" class="zi">service</a>
-            <a href="#section3" title="contact" class="zi">contact</a>
-            <a href="#section4" title="a propos"class="zi">a propos</a>
-        </div>
+    <header class="header">
+        <h1 class="header-title">MY LAVAGE</h1>
+        <nav class="header-nav">
+            <a href="./index.html">Acceuil</a>
+            <a href="./services.html">Services</a>
+            <a href="./about.html">A propos</a>
+            <a href="./contact.html">Contact</a>
+        </nav>   
     </header>
-
-    <section id="section1">
-        <div class="lion">
-            <div class="hero">
-                <div><img src="img/134.jpg" alt="" width="500" height="500"></div>
-                <div class="texte">
-                    <h1>BIENVENUE CHEZ NOUS</h1>
-                    <p>MERCI DE CHOISIR NOTRE SERVICE</p>
-                    <P>ICI TOUT EST PERMIS</P>
+    <div class="background">
+        <h1>Bienvenue chez MY LAVAGE</h1>
+        <p>Votre satisfaction est notre priorité.</p>
+    </div>
+    <main class="main">
+        <div class="display">
+            <div class="card">
+                <img src="./img/lavages_interieur.jpg" class="card-img" alt="">
+                <div class="card-body">
+                    <h2>Lavage Intérieur</h2>
+                    <p>Un nettoyage complet de l'intérieur de votre véhicule.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <hr>
-    <section id="section2">
-        <div class="pp">
-            <div class="ss" style="float: left;">
-                <a href="#section3">
-                <div class="gg"><img src="img/134.jpg" alt="" height="300"></div>
-            </a>
-                <div class="TT">INTERNE</div>
-        </div>
-        <div class="ss">
-            <a href="#section3">
-            <div class="gg"><img src="img/134.jpg" alt="" height="300"></div>
-        </a>
-            <div class="TT">EXTERNE</div>
-        </div>
-        <div class="sa" >
-            <a href="#section3">
-            <div class="gg"><img src="img/134.jpg" alt="" height="300"></div>
-        </a>
-            <div class="TT">MOTO</div>
-        </div>
-        </div>
-    </section>
-    <section id="section3">
-      <div class="fol">
-            <div class="xol">
-                <form id="donne">
-                    <div class="sili">
-                        <h3> FORMULAIRE </h3>
-                        <p>VOTRE IDENTITE</p>
-                    </div>
-
-                <Div>
-                    <label for="Nom">Nom :</label><br>
-                    <input type="text" id="Nom" placeholder="Entrer Nom" pattern="[A-Za-z]+" required>
-                    <br><br>
-                    
-                    <label for="Email">Email :</label><br>
-    <input type="email" id="Email" placeholder="Saisir email" required>
-                    <br><br>
-                    <label for="Telephonem">Téléphone :</label><br>
-        <input type="tel" id="Telephonem" placeholder="Entrer Telephone" pattern="[0-9]+" required>
-                    <br><br>
-                    <label for="service"> service :</label><br>
-                    <select name="service" id="service">
-                      <option value="interne">INTERNE</option>
-                      <option value="externe">EXTERNE</option>
-                      <option value="moto">MOTO</option>
-                    </select>
-                    <div class="btn-container">
-                        <a href="tel:+243973946076"class="btn" >ENVOYER</a>
-                    
-                         <button class="btn btn-danger">Effacer</button>
-                     </div>
-                </form>
-            </div>
-        </div>
-    </section>
-    <section id="section4">
-        <div class="zu">
-            <p>tout est permis</p>
-        </div>
-    </section>
-    <footer class="dad">
-        <br><br><br><br>
-        <p>&copy; 2024 My_LAVAGE.</p>
-    </footer>
+    </main>
 </body>
 </html>

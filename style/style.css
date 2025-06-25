@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+.header {
+  background-color: #3A6EA5;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+.header-title {
+  color: #F57C00;
+  padding-bottom: 10px;
+}
+.header-nav a {
+  padding-left: 20px;
+  text-decoration: none;
+  color: white;
+}
+.header-nav a:hover {
+  color: #F57C00;
+}
+.background {
+  background: url(../img/exterieur.jpg) no-repeat center center/ cover;
+  height: 400px;
+}
+.background h1 {
+    text-align: center;
+    padding-top: 120px;
+    font-size: 40px;
+    color:blue;
+    opacity:0.9;
+}
+.background p {
+  text-align: center;
+  font-size: 25px;
+  padding-top: 20px;
+  color: #ffffff;
+}
+.card {
+  width: 350px;
+}
+.card img {
+  width: 100%;
+}
