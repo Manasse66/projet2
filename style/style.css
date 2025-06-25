@@ -39,9 +39,33 @@
   padding-top: 20px;
   color: #ffffff;
 }
+.main {
+  background-color: #FFA726;
+}
 .card {
+  margin-top: 50px;
   width: 350px;
+  color: white;
+  background-color: #3A6EA5;
+}
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+.card-body h1{
+  padding-left: 20px;
+}
+.card-body p {
+  padding: 10px;
+  font-size: 18px;
 }
 .card img {
   width: 100%;
+}
+.display {
+  display: flex;
+  flex-wrap: wrap;
+ gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
