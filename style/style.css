@@ -97,8 +97,8 @@ body {
 }
 .carte {
   background-color: lightgray;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 150px;
+  margin-right: 150px;
   height: 300px;
   
 }
@@ -107,7 +107,7 @@ body {
   gap: 20px;
 }
 .carte-img {
-  width: 400px;
+  width: 500px;
   height: 300px;
 }
 .carte-img:hover {
@@ -115,6 +115,7 @@ body {
 }
 .carte-body {
   padding-left: 20px;
+  padding-right: 20px;
   color: black;
 }
 .carte-body h2 {
@@ -123,9 +124,13 @@ body {
   color: #3A6EA5;
   font-size: 24px;
 }
-.card-body p {
+.carte-body p {
+  padding-top: 20px;
   font-size: 18px;
-  
+  text-align: justify;
+}
+strong {
+  color: red;
 }
 footer {
   background-color: #3A6EA5;
