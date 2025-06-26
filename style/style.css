@@ -58,6 +58,7 @@
 .card-body p {
   padding: 10px;
   font-size: 18px;
+  height: 65px;
 }
 .card img {
   width: 100%;
@@ -75,7 +76,9 @@
 }
 .phrase h1{
   text-align: center;
-  padding: 20px;
+  padding-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 22px;
   color: #3A6EA5;
 }
