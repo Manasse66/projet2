@@ -29,8 +29,14 @@ CREATE TABLE service (
    prix DECIMAL(15,2) NOT NULL,
    duree INT NOT NULL,
    image_service VARCHAR(255),
+   statut VARCHAR(50) NOT NULL DEFAULT 'activer',
    PRIMARY KEY (id_service)
 );
+
+INSERT INTO service (nom_service, description, prix, duree, image_service, statut) VALUES
+('Lavage Exterieur', 'Lavage carrosserie, jantes, vitres et phares avec produits de qualite.', 30.00, 30, 'netoyage_exterieur.jpg', 'activer'),
+('Lavage Interieur', 'Aspiration, plastiques, vitres interieures et tableau de bord.', 30.00, 45, 'interieur.jpg', 'activer'),
+('Lavage Moteur', 'Lavage moteur, degraissage et nettoyage des elements accessibles.', 50.00, 45, 'moteur3.jpg', 'activer');
 
 CREATE TABLE utilisateur (
    id_utilisateur BIGINT AUTO_INCREMENT,

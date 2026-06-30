@@ -1,5 +1,5 @@
     <footer>
-        <p>&copy; 2025 MY LAVAGE. Tous droits réservés.</p>
+        <p>&copy; 2026 MY LAVAGE. Tous droits reserves.</p>
     </footer>
 </body>
 </html>

@@ -238,6 +238,76 @@ body {
 .auth-link a:hover {
   color: #F57C00;
 }
+.admin-box {
+  width: 90%;
+  max-width: 720px;
+  margin: 0 auto 30px;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: lightgray;
+  color: black;
+  text-align: left;
+}
+.admin-box h1,
+.admin-box h2,
+.admin-list h2 {
+  margin-bottom: 20px;
+  color: #3A6EA5;
+  text-align: center;
+}
+.admin-box p {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.admin-list {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: lightgray;
+  color: black;
+}
+.admin-service {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border-radius: 8px;
+  background-color: white;
+  text-align: left;
+}
+.admin-service label {
+  color: #3A6EA5;
+  font-weight: bold;
+}
+.admin-service input,
+.admin-service select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.admin-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.admin-actions button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3A6EA5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.admin-actions button:hover {
+  background-color: #F57C00;
+}
 strong {
   color: red;
 }
@@ -280,6 +350,12 @@ footer {
     display: block;
     width: fit-content;
     margin: 15px auto 0;
+  }
+  .admin-service {
+    grid-template-columns: 1fr;
+  }
+  .admin-actions {
+    justify-content: center;
   }
 }
 
