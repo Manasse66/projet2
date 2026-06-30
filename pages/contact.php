@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/style.css">
-    <title>MY LAVAGE</title>
-</head>
-<body>
-    <header class="header">
-        <h1 class="header-title">MY LAVAGE</h1>
-        <nav class="header-nav">
-            <a href="../index.html">Accueil</a>
-            <a href="./services.html">Services</a>
-            <a href="./contact.html">Contact</a>
-        </nav>   
-    </header>
+<?php
+$pageTitle = 'Contact - MY LAVAGE';
+$pageActive = 'contact';
+require_once __DIR__ . '/../includes/header.php';
+?>
     <main class="main-service">
         <div class="display">
             <article>
                 <div class="card">
-                    <a target="_blank" href="https://wa.me/243992521830"><img src="../img/whatsapp.png" class="card-img" alt=""></a>
+                    <a target="_blank" href="https://wa.me/243890173510"><img src="../assets/img/whatsapp.png" class="card-img" alt=""></a>
                     <div class="card-body">
                         <h2>Contactez-nous</h2>
                         <p>Pour toute demande d'information, n'hésitez pas à nous contacter.</p>
@@ -28,7 +16,7 @@
            </article>
             <article>
                 <div class="card">
-                    <a href="tel:+243992521830"><img src="../img/telephone.png" class="card-img" alt=""></a>
+                    <a href="tel:+243890173510"><img src="../assets/img/telephone.png" class="card-img" alt=""></a>
                     <div class="card-body">
                         <h2>Appelez-nous</h2>
                         <p>Pour toute demande d'information, n'hésitez pas à nous contacter.</p>
@@ -37,7 +25,7 @@
            </article>
             <article>
                 <div class="card">
-                    <a href="mailto:exauceyayama@gmail.com"><img src="../img/mail.png" class="card-img" alt=""></a>
+                    <a href="mailto:mylavage2026@gmail.com"><img src="../assets/img/mail.png" class="card-img" alt=""></a>
                     <div class="card-body">
                         <h2>Contactez-nous</h2>
                         <p>Pour toute demande d'information, n'hésitez pas à nous contacter.</p>
@@ -46,8 +34,5 @@
            </article>
         </div>
     </main>
-    <footer>
-        <p>&copy; 2025 MY LAVAGE. Tous droits réservés.</p>
-    </footer>
-</body>
-</html>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+
