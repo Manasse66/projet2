@@ -3,30 +3,16 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$basePath = $basePath ?? './';
 $pageTitle = $pageTitle ?? 'MY LAVAGE';
-$currentPage = basename($_SERVER['PHP_SELF']);
+$pageActive = $pageActive ?? '';
 $isConnected = isset($_SESSION['id_utilisateur']);
-
-$navLinks = [
-    ['href' => 'index.php', 'label' => 'Accueil', 'page' => 'index.php'],
-    ['href' => 'pages/services.php', 'label' => 'Services', 'page' => 'services.php'],
-    ['href' => 'pages/contact.php', 'label' => 'Contact', 'page' => 'contact.php'],
-];
-
-if ($isConnected) {
-    $navLinks[] = ['href' => 'pages/deconnexion.php', 'label' => 'Deconnecter', 'page' => 'deconnexion.php'];
-} else {
-    $navLinks[] = ['href' => 'pages/connexion.php', 'label' => 'Connexion', 'page' => 'connexion.php'];
-    $navLinks[] = ['href' => 'pages/inscription.php', 'label' => 'Inscription', 'page' => 'inscription.php'];
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= $basePath ?>assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <title><?= $pageTitle ?></title>
 </head>
 <body>
@@ -39,10 +25,15 @@ if ($isConnected) {
                 </span>
             <?php endif; ?>
 
-            <?php foreach ($navLinks as $link): ?>
-                <a href="<?= $basePath . $link['href'] ?>" class="<?= $currentPage === $link['page'] ? 'active' : '' ?>">
-                    <?= $link['label'] ?>
-                </a>
-            <?php endforeach; ?>
+            <a href="/index.php" class="<?= $pageActive == 'accueil' ? 'active' : '' ?>">Accueil</a>
+            <a href="/pages/services.php" class="<?= $pageActive == 'services' ? 'active' : '' ?>">Services</a>
+            <a href="/pages/contact.php" class="<?= $pageActive == 'contact' ? 'active' : '' ?>">Contact</a>
+
+            <?php if ($isConnected): ?>
+                <a href="/pages/deconnexion.php">Deconnecter</a>
+            <?php else: ?>
+                <a href="/pages/connexion.php" class="<?= $pageActive == 'connexion' ? 'active' : '' ?>">Connexion</a>
+                <a href="/pages/inscription.php" class="<?= $pageActive == 'inscription' ? 'active' : '' ?>">Inscription</a>
+            <?php endif; ?>
         </nav>
     </header>

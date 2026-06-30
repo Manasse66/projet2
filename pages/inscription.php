@@ -8,8 +8,8 @@ if (isset($_SESSION['id_utilisateur'])) {
     exit;
 }
 
-$basePath = '../';
 $pageTitle = 'Inscription - MY LAVAGE';
+$pageActive = 'inscription';
 $message = '';
 $messageClass = '';
 $nom = '';
@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = trim(strip_tags($_POST['nom']));
         $prenom = trim(strip_tags($_POST['prenom']));
         $email = trim(strip_tags($_POST['email']));
-        $password = trim(strip_tags($_POST['password']));
-        $confirmPassword = trim(strip_tags($_POST['confirm_password']));
+        $password = htmlspecialchars($_POST['password']);
+        $confirmPassword = htmlspecialchars($_POST['confirm_password']);
 
         if ($nom == '' || $email == '' || $password == '' || $confirmPassword == '') {
             throw new Exception('Veuillez remplir tous les champs obligatoires.');

@@ -8,8 +8,8 @@ if (isset($_SESSION['id_utilisateur'])) {
     exit;
 }
 
-$basePath = '../';
 $pageTitle = 'Connexion - MY LAVAGE';
+$pageActive = 'connexion';
 $message = '';
 $messageClass = '';
 $email = '';
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $email = trim(strip_tags($_POST['email']));
-        $password = trim(strip_tags($_POST['password']));
+        $password = htmlspecialchars($_POST['password']);
 
         if ($email == '' || $password == '') {
             throw new Exception('Veuillez remplir tous les champs.');

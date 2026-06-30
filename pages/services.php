@@ -1,6 +1,6 @@
 <?php
-$basePath = '../';
 $pageTitle = 'Services - MY LAVAGE';
+$pageActive = 'services';
 require_once __DIR__ . '/../includes/header.php';
 ?>
     <main class="main-service">
