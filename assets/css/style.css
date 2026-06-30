@@ -308,6 +308,35 @@ body {
 .admin-actions button:hover {
   background-color: #F57C00;
 }
+.admin-reservation,
+.reservation-item {
+  margin-bottom: 18px;
+  padding: 18px;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  text-align: left;
+}
+.admin-reservation p,
+.reservation-item p {
+  margin-bottom: 8px;
+}
+.admin-reservation label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  color: #3A6EA5;
+  font-weight: bold;
+}
+.admin-reservation textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  resize: vertical;
+}
 strong {
   color: red;
 }

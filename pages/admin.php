@@ -133,10 +133,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = 'Service supprime.';
         $messageClass = 'alert-success';
     }
+
+    if (isset($_POST['accepter_reservation']) || isset($_POST['refuser_reservation'])) {
+        try {
+            $idReservation = trim(strip_tags($_POST['id_reservation']));
+            $contenu = trim(strip_tags($_POST['contenu']));
+            $statutReservation = isset($_POST['accepter_reservation']) ? 'accepter' : 'refuser';
+
+            if (empty($idReservation) || empty($contenu)) {
+                throw new Exception('Ecris un message pour le client.');
+            }
+
+            $requete = $bdd->prepare('SELECT statut FROM reservation WHERE id_reservation = :id_reservation');
+            $requete->execute([
+                'id_reservation' => $idReservation
+            ]);
+            $reservation = $requete->fetch();
+
+            if (!$reservation || $reservation['statut'] != 'en attente') {
+                throw new Exception('Cette reservation a deja ete traitee.');
+            }
+
+            $requete = $bdd->prepare('UPDATE reservation SET statut = :statut WHERE id_reservation = :id_reservation');
+            $requete->execute([
+                'statut' => $statutReservation,
+                'id_reservation' => $idReservation
+            ]);
+
+            $requete = $bdd->prepare(
+                'INSERT INTO message (contenu, date_message, id_reservation, id_role)
+                 VALUES (:contenu, NOW(), :id_reservation, :id_role)'
+            );
+            $requete->execute([
+                'contenu' => $contenu,
+                'id_reservation' => $idReservation,
+                'id_role' => 2
+            ]);
+
+            $message = 'Reservation traitee avec succes.';
+            $messageClass = 'alert-success';
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $messageClass = 'alert-error';
+        }
+    }
 }
 
 $requete = $bdd->query('SELECT id_service, nom_service, description, prix, duree, image_service, statut FROM service ORDER BY id_service DESC');
 $services = $requete->fetchAll();
+
+$requete = $bdd->query(
+    'SELECT reservation.id_reservation,
+            reservation.date_reservation,
+            reservation.statut,
+            reservation.numreservation,
+            service.nom_service,
+            utilisateur.nom,
+            utilisateur.prenom,
+            utilisateur.email
+     FROM reservation
+     INNER JOIN service ON reservation.id_service = service.id_service
+     INNER JOIN utilisateur ON reservation.id_utilisateur = utilisateur.id_utilisateur
+     ORDER BY reservation.id_reservation DESC'
+);
+$reservations = $requete->fetchAll();
 
 $pageTitle = 'Admin - MY LAVAGE';
 $pageActive = 'admin';
@@ -211,6 +271,41 @@ require_once __DIR__ . '/../includes/header.php';
                         <button type="submit" name="supprimer_service">Supprimer</button>
                     </div>
                 </form>
+            <?php endforeach; ?>
+        </section>
+
+        <section class="admin-list">
+            <h2>Reservations</h2>
+
+            <?php if (empty($reservations)): ?>
+                <p>Aucune reservation pour le moment.</p>
+            <?php endif; ?>
+
+            <?php foreach ($reservations as $reservation): ?>
+                <div class="admin-reservation">
+                    <p><strong>Numero :</strong> <?= htmlspecialchars($reservation['numreservation']) ?></p>
+                    <p><strong>Client :</strong> <?= htmlspecialchars($reservation['prenom'] . ' ' . $reservation['nom']) ?></p>
+                    <p><strong>Email :</strong> <?= htmlspecialchars($reservation['email']) ?></p>
+                    <p><strong>Service :</strong> <?= htmlspecialchars($reservation['nom_service']) ?></p>
+                    <p><strong>Date :</strong> <?= htmlspecialchars($reservation['date_reservation']) ?></p>
+                    <p><strong>Statut :</strong> <?= htmlspecialchars($reservation['statut']) ?></p>
+
+                    <?php if ($reservation['statut'] == 'en attente'): ?>
+                        <form method="post">
+                            <input type="hidden" name="id_reservation" value="<?= htmlspecialchars($reservation['id_reservation']) ?>">
+
+                            <label>Message pour le client</label>
+                            <textarea name="contenu" required placeholder="Exemple : votre reservation est acceptee, on vous attend a 10h."></textarea>
+
+                            <div class="admin-actions">
+                                <button type="submit" name="accepter_reservation">Accepter</button>
+                                <button type="submit" name="refuser_reservation">Refuser</button>
+                            </div>
+                        </form>
+                    <?php else: ?>
+                        <p>Reservation deja traitee.</p>
+                    <?php endif; ?>
+                </div>
             <?php endforeach; ?>
         </section>
     </main>

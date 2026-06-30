@@ -43,7 +43,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </p>
                             <p>
                                 <strong>Tarif : <?= htmlspecialchars($service['prix']) ?> $</strong>
-                                <a class="reservation-btn" href="./contact.php">Reserver</a>
+                                <a class="reservation-btn" href="./reservation.php?id_service=<?= htmlspecialchars($service['id_service']) ?>">Reserver</a>
                             </p>
                         </div>
                     </div>

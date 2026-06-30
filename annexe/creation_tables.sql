@@ -54,9 +54,11 @@ CREATE TABLE reservation (
    id_reservation BIGINT AUTO_INCREMENT,
    date_reservation DATETIME NOT NULL,
    statut VARCHAR(50) NOT NULL,
+   numreservation VARCHAR(50) NOT NULL,
    id_service INT NOT NULL,
    id_utilisateur BIGINT NOT NULL,
    PRIMARY KEY (id_reservation),
+   UNIQUE (numreservation),
    FOREIGN KEY (id_service) REFERENCES service(id_service),
    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );

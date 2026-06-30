@@ -33,6 +33,7 @@ $isConnected = isset($_SESSION['id_utilisateur']);
                 <?php if ($_SESSION['id_role'] == 2): ?>
                     <a href="/pages/admin.php" class="<?= $pageActive == 'admin' ? 'active' : '' ?>">Admin</a>
                 <?php endif; ?>
+                <a href="/pages/reservation.php" class="<?= $pageActive == 'reservation' ? 'active' : '' ?>">Mes reservations</a>
                 <a href="/pages/deconnexion.php">Deconnecter</a>
             <?php else: ?>
                 <a href="/pages/connexion.php" class="<?= $pageActive == 'connexion' ? 'active' : '' ?>">Connexion</a>
