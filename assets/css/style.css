@@ -25,6 +25,10 @@ body {
 .header-nav a:hover {
   color: #F57C00;
 }
+.header-nav a.active {
+  color: #F57C00;
+  font-weight: bold;
+}
 .background {
   background: url(../img/meilleur_photo.jpg) no-repeat center center/ cover;
   height: 400px;
@@ -146,6 +150,64 @@ body {
   background-color: #F57C00;
   transform: translateY(-2px);
 }
+.auth-box {
+  width: 90%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: lightgray;
+  color: black;
+  text-align: left;
+}
+.auth-box h1 {
+  margin-bottom: 25px;
+  color: #3A6EA5;
+  text-align: center;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.auth-form label {
+  font-weight: bold;
+  color: #3A6EA5;
+}
+.auth-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.auth-form button {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3A6EA5;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.auth-form button:hover {
+  background-color: #F57C00;
+  transform: translateY(-2px);
+}
+.auth-link {
+  margin-top: 18px;
+  text-align: center;
+}
+.auth-link a {
+  color: #3A6EA5;
+  font-weight: bold;
+  text-decoration: none;
+}
+.auth-link a:hover {
+  color: #F57C00;
+}
 strong {
   color: red;
 }
@@ -190,3 +252,5 @@ footer {
     margin: 15px auto 0;
   }
 }
+
+

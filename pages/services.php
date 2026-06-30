@@ -1,27 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/style.css">
-    <title>MY LAVAGE</title>
-</head>
-<body>
-    <header class="header">
-        <h1 class="header-title">MY LAVAGE</h1>
-        <nav class="header-nav">
-            <a href="../index.html">Accueil</a>
-            <a href="./services.html">Services</a>
-            <a href="./contact.html">Contact</a>
-        </nav>   
-    </header>
+<?php
+$basePath = '../';
+$pageTitle = 'Services - MY LAVAGE';
+require_once __DIR__ . '/../includes/header.php';
+?>
     <main class="main-service">
         <h1 class="main-service-title">Nos Services</h1>
         <div>
             <article>
                 <div class="carte">
                     <div class="display-service">
-                        <img src="../img/netoyage_exterieur.jpg" class="carte-img" alt="">
+                        <img src="../assets/img/netoyage_exterieur.jpg" class="carte-img" alt="">
                     <div class="carte-body">
                         <h2>Lavage Exterieur</h2>
                         <p>
@@ -33,7 +21,7 @@
                             </p>
                             <br>
                             <br>
-                            <strong>Tarif : 30 $</strong> <a class="reservation-btn" href="./contact.html">Réserver</a>
+                            <strong>Tarif : 30 $</strong> <a class="reservation-btn" href="./contact.php">Réserver</a>
                         </p>
                     </div>
                     </div>
@@ -44,7 +32,7 @@
             <article>
                 <div class="carte">
                     <div class="display-service">
-                        <img src="../img/interieur.jpg" class="carte-img" alt="">
+                        <img src="../assets/img/interieur.jpg" class="carte-img" alt="">
                     <div class="carte-body">
                         <h2>Lavage Interieur</h2>
                         <p>
@@ -56,7 +44,7 @@
                             </p>
                             <br>
                             <br>
-                            <strong>Tarif : 30 $</strong> <a class="reservation-btn" href="./contact.html">Réserver</a>
+                            <strong>Tarif : 30 $</strong> <a class="reservation-btn" href="./contact.php">Réserver</a>
                         </p>
                     </div>
                     </div>
@@ -67,7 +55,7 @@
             <article>
                 <div class="carte">
                     <div class="display-service">
-                        <img src="../img/moteur3.jpg" class="carte-img" alt="">
+                        <img src="../assets/img/moteur3.jpg" class="carte-img" alt="">
                     <div class="carte-body">
                         <h2>Lavage Moteur</h2>
                         <p>
@@ -79,7 +67,7 @@
                             </p>
                             <br>
                             <br>
-                            <strong>Tarif : 50 $</strong> <a class="reservation-btn" href="./contact.html">Réserver</a>
+                            <strong>Tarif : 50 $</strong> <a class="reservation-btn" href="./contact.php">Réserver</a>
                         </p>
                     </div>
                     </div>
@@ -87,8 +75,6 @@
             </article>
         </div>
     </main>     
-    <footer>
-        <p>&copy; 2025 MY LAVAGE. Tous droits réservés.</p>
-    </footer>
-    </body>
-</html>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+
+
