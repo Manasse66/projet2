@@ -18,6 +18,8 @@ CREATE TABLE roles (
    PRIMARY KEY (id_role)
 );
 
+INSERT INTO roles (description) VALUES ('client');
+
 CREATE TABLE service (
    id_service INT AUTO_INCREMENT,
    nom_service VARCHAR(50) NOT NULL,
@@ -33,7 +35,7 @@ CREATE TABLE utilisateur (
    nom VARCHAR(50) NOT NULL,
    prenom VARCHAR(50),
    email VARCHAR(50) NOT NULL,
-   password VARCHAR(50),
+   password VARCHAR(255),
    id_role BIGINT NOT NULL,
    PRIMARY KEY (id_utilisateur),
    UNIQUE (email),
