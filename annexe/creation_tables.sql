@@ -18,7 +18,9 @@ CREATE TABLE roles (
    PRIMARY KEY (id_role)
 );
 
-INSERT INTO roles (description) VALUES ('client');
+INSERT INTO roles (id_role, description) VALUES
+(1, 'utilisateur simple'),
+(2, 'administrateur');
 
 CREATE TABLE service (
    id_service INT AUTO_INCREMENT,

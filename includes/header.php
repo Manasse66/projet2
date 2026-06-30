@@ -1,15 +1,25 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $basePath = $basePath ?? './';
 $pageTitle = $pageTitle ?? 'MY LAVAGE';
 $currentPage = basename($_SERVER['PHP_SELF']);
+$isConnected = isset($_SESSION['id_utilisateur']);
 
 $navLinks = [
     ['href' => 'index.php', 'label' => 'Accueil', 'page' => 'index.php'],
     ['href' => 'pages/services.php', 'label' => 'Services', 'page' => 'services.php'],
     ['href' => 'pages/contact.php', 'label' => 'Contact', 'page' => 'contact.php'],
-    ['href' => 'pages/connexion.php', 'label' => 'Connexion', 'page' => 'connexion.php'],
-    ['href' => 'pages/inscription.php', 'label' => 'Inscription', 'page' => 'inscription.php'],
 ];
+
+if ($isConnected) {
+    $navLinks[] = ['href' => 'pages/deconnexion.php', 'label' => 'Deconnecter', 'page' => 'deconnexion.php'];
+} else {
+    $navLinks[] = ['href' => 'pages/connexion.php', 'label' => 'Connexion', 'page' => 'connexion.php'];
+    $navLinks[] = ['href' => 'pages/inscription.php', 'label' => 'Inscription', 'page' => 'inscription.php'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,6 +33,12 @@ $navLinks = [
     <header class="header">
         <h1 class="header-title">MY LAVAGE</h1>
         <nav class="header-nav">
+            <?php if ($isConnected): ?>
+                <span class="user-name">
+                    <?= htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']) ?>
+                </span>
+            <?php endif; ?>
+
             <?php foreach ($navLinks as $link): ?>
                 <a href="<?= $basePath . $link['href'] ?>" class="<?= $currentPage === $link['page'] ? 'active' : '' ?>">
                     <?= $link['label'] ?>

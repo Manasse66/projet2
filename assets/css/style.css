@@ -18,9 +18,20 @@ body {
   padding-bottom: 10px;
 }
 .header-nav a {
-  padding-left: 20px;
+  display: inline-block;
+  padding: 8px 10px;
   text-decoration: none;
   color: white;
+}
+.user-name {
+  display: inline-block;
+  margin-left: 15px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }
 .header-nav a:hover {
   color: #F57C00;
