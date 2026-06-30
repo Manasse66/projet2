@@ -131,6 +131,21 @@ body {
   text-decoration: none;
   color: #3A6EA5;
 }
+.reservation-btn {
+  display: inline-block;
+  margin-left: 15px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background-color: #3A6EA5;
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(58, 110, 165, 0.35);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.reservation-btn:hover {
+  background-color: #F57C00;
+  transform: translateY(-2px);
+}
 strong {
   color: red;
 }
@@ -168,5 +183,10 @@ footer {
   .carte-img {
     width: 300px;
     height: auto; 
+  }
+  .reservation-btn {
+    display: block;
+    width: fit-content;
+    margin: 15px auto 0;
   }
 }
