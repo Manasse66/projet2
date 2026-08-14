@@ -1,0 +1,515 @@
+DOSSIER COMPLET DU PROJET « MY LAVAGE »
+Document de contexte destiné à la rédaction d’une monographie
+Établi à partir des fichiers réellement présents dans le dépôt au 13 août 2026
+
+======================================================================
+1. CONSIGNE POUR CHATGPT
+======================================================================
+
+À partir des informations ci-dessous, rédige une monographie académique complète et cohérente sur la conception et la réalisation d’une application web de gestion des services et des réservations d’une entreprise de lavage de véhicules appelée « MY LAVAGE ».
+
+Important :
+- ne pas inventer le nom de l’étudiant, de l’établissement, du directeur, de la ville, de la promotion, de l’entreprise d’accueil ou la méthode de recherche ;
+- laisser des mentions [À COMPLÉTER] lorsque ces informations sont nécessaires ;
+- distinguer ce qui est déjà implémenté de ce qui constitue une recommandation ;
+- employer un français académique simple et naturel ;
+- expliquer les choix techniques (PHP, MySQL, PDO, HTML, CSS, sessions) ;
+- inclure si possible : introduction générale, problématique, hypothèses, objectifs, intérêt du sujet, délimitation, méthodes et techniques (à valider par l’étudiant), cadre théorique, analyse de l’existant, conception du système, modèle de données, réalisation, sécurité, tests, limites, pistes d’amélioration, conclusion générale et annexes ;
+- proposer des emplacements pour les captures d’écran et les diagrammes ;
+- ne pas prétendre que des tests, une enquête, un déploiement ou une méthode formelle ont été réalisés s’ils ne sont pas documentés ici.
+
+======================================================================
+2. IDENTITÉ ET RÉSUMÉ DU PROJET
+======================================================================
+
+Nom : MY LAVAGE.
+
+Nature : application web dynamique de présentation et de gestion d’une entreprise de lavage de véhicules.
+
+Finalité : permettre aux visiteurs de découvrir les prestations de lavage et les moyens de contact ; permettre aux clients de créer un compte, de se connecter, de réserver un service à une date et une heure choisies et de suivre la réponse de l’administrateur ; permettre à l’administrateur de gérer le catalogue des services et de traiter les réservations.
+
+Le système repose sur deux profils :
+1. utilisateur simple ou client (id_role = 1) ;
+2. administrateur (id_role = 2).
+
+Le principe fonctionnel central est le suivant : le client choisit un service et envoie une demande de réservation. La demande reçoit le statut « en attente ». L’administrateur l’accepte ou la refuse et accompagne sa décision d’un message. Le client consulte ensuite le statut et le message depuis son espace de réservations.
+
+Le dépôt montre un projet pédagogique relativement compact, développé sans framework PHP. Il utilise une architecture organisée par dossiers, des pages PHP procédurales, une base de données relationnelle MySQL, PDO pour l’accès aux données, des sessions PHP pour l’authentification et les rôles, et une feuille CSS unique pour la présentation.
+
+======================================================================
+3. CONTEXTE, PROBLÈME ET JUSTIFICATION POSSIBLES
+======================================================================
+
+Le besoin auquel répond l’application peut être formulé ainsi : dans une entreprise de lavage fonctionnant avec des demandes faites oralement, par téléphone ou par messagerie, le client ne dispose pas forcément d’un catalogue centralisé, d’un numéro de réservation ni d’un espace où vérifier le traitement de sa demande. De son côté, le responsable peut rencontrer des difficultés pour présenter ses prestations, organiser les demandes et transmettre une réponse claire au client.
+
+Problématique suggérée (à faire valider par l’étudiant) :
+« Comment concevoir et réaliser une application web simple permettant à une entreprise de lavage de présenter ses services, de centraliser les réservations des clients et d’assurer le suivi des décisions prises par l’administrateur ? »
+
+Question principale possible : comment informatiser le processus allant de la consultation des services jusqu’à l’acceptation ou au refus d’une réservation ?
+
+Hypothèse possible (à ne présenter comme hypothèse réelle qu’après validation) : la mise en place d’une application web centralisant les services, les comptes clients, les réservations et les réponses administratives pourrait améliorer l’accessibilité de l’offre, la traçabilité des demandes et la communication entre l’entreprise et ses clients.
+
+Objectif général suggéré : concevoir et réaliser une application web de gestion des services et des réservations pour MY LAVAGE.
+
+Objectifs spécifiques suggérés :
+- présenter les services disponibles avec leur description, prix, durée et image ;
+- permettre la création et l’authentification d’un compte client ;
+- permettre à un client authentifié de réserver un service ;
+- générer une référence unique pour chaque réservation ;
+- permettre au client de suivre ses propres demandes ;
+- permettre à l’administrateur de gérer les services ;
+- permettre à l’administrateur d’accepter ou de refuser une réservation et de motiver sa réponse ;
+- appliquer des protections de base sur les mots de passe, les requêtes SQL, les sorties HTML et le contrôle d’accès.
+
+Intérêt du sujet :
+- pour l’entreprise : centralisation des demandes et meilleure visibilité des services ;
+- pour le client : accès à l’information et suivi de la réservation ;
+- pour l’étudiant : mise en pratique de la programmation web, des bases de données relationnelles, de l’authentification et des règles de gestion.
+
+Délimitation fonctionnelle réelle : le projet couvre le catalogue, les comptes, l’authentification, la réservation, le suivi, la gestion administrative des services et le traitement des demandes. Il ne contient pas de paiement en ligne, de facturation, de gestion du personnel, de gestion de stock, de notification automatique, d’application mobile native ni de statistiques avancées.
+
+======================================================================
+4. UTILISATEURS ET ACTEURS
+======================================================================
+
+Visiteur non connecté :
+- consulte l’accueil ;
+- consulte les services actifs ;
+- consulte la page de contact ;
+- peut accéder aux formulaires d’inscription et de connexion ;
+- ne peut pas effectuer une réservation sans se connecter.
+
+Client connecté :
+- dispose de toutes les possibilités du visiteur ;
+- voit son prénom et son nom dans le menu ;
+- sélectionne un service actif ;
+- choisit la date et l’heure de sa réservation ;
+- consulte uniquement ses propres réservations ;
+- voit pour chaque réservation le numéro, le service, la date, le statut et les messages administratifs ;
+- peut se déconnecter.
+
+Administrateur connecté :
+- accède à une page protégée réservée au rôle 2 ;
+- ajoute un service avec une image ;
+- modifie les informations d’un service ;
+- active, désactive ou supprime logiquement un service ;
+- consulte toutes les réservations avec l’identité et l’adresse électronique des clients ;
+- accepte ou refuse une réservation encore en attente ;
+- écrit un message destiné au client ;
+- ne peut plus retraiter, via l’interface prévue, une réservation déjà traitée.
+
+======================================================================
+5. FONCTIONNALITÉS DÉTAILLÉES
+======================================================================
+
+5.1 Accueil
+
+La page index.php présente l’identité « MY LAVAGE », un message de bienvenue et plusieurs cartes illustrant notamment le lavage intérieur, le lavage extérieur et le lavage de moto. Elle contient des liens vers les services. Elle joue le rôle de vitrine de l’entreprise.
+
+5.2 Contact
+
+La page pages/contact.php fournit trois canaux : WhatsApp, téléphone et courrier électronique. Les données visibles dans le code sont : numéro +243 890 173 510 et adresse mylavage2026@gmail.com. Ces coordonnées sont publiques dans l’application, mais doivent être confirmées avant publication dans la monographie.
+
+5.3 Inscription
+
+Le formulaire demande le nom, le prénom, l’adresse électronique, le mot de passe et sa confirmation. Le nom, l’e-mail et les deux champs de mot de passe sont obligatoires ; le prénom n’est pas obligatoire dans la logique serveur et dans le schéma SQL. L’adresse électronique est validée avec FILTER_VALIDATE_EMAIL. Le système vérifie son unicité. Les deux mots de passe doivent correspondre. Le mot de passe est enregistré avec password_hash(..., PASSWORD_DEFAULT). Le nouvel utilisateur reçoit automatiquement le rôle client (1), puis il est directement authentifié grâce aux données placées en session.
+
+5.4 Connexion et déconnexion
+
+La connexion recherche l’utilisateur par son e-mail au moyen d’une requête préparée, puis vérifie le mot de passe avec password_verify. En cas de succès, l’identifiant, le nom, le prénom, l’e-mail et le rôle sont stockés dans $_SESSION. La déconnexion exécute session_unset(), session_destroy(), puis redirige vers l’accueil. Un utilisateur déjà connecté est redirigé s’il essaie d’ouvrir les pages de connexion ou d’inscription.
+
+5.5 Consultation des services
+
+La page pages/services.php lit uniquement les services ayant le statut « activer », dans l’ordre décroissant des identifiants. Chaque carte affiche l’image, le nom, la description, la durée, le prix et un bouton « Réserver ». Le bouton transmet id_service à pages/reservation.php dans l’URL.
+
+5.6 Création et suivi d’une réservation
+
+L’accès à pages/reservation.php exige une session utilisateur. Le client choisit une date et une heure grâce à un champ datetime-local. Le serveur vérifie que le service existe encore et qu’il est actif. Il génère une référence par strtoupper(uniqid('RES-')), initialise le statut à « en attente » et enregistre la réservation avec l’identifiant du service et celui du client connecté.
+
+La même page liste les réservations de l’utilisateur courant seulement, grâce à une condition WHERE reservation.id_utilisateur = :id_utilisateur. Pour chacune, elle récupère aussi les messages liés. Cette séparation empêche normalement un client de voir les réservations des autres depuis l’interface.
+
+5.7 Gestion administrative des services
+
+La page pages/admin.php exige qu’un utilisateur soit connecté et que $_SESSION['id_role'] soit égal à 2. L’administrateur peut ajouter un service avec nom, description, prix, durée et image. Il peut modifier ces données, changer le statut et éventuellement remplacer l’image. L’image est déplacée vers assets/img/ et son nom est stocké en base.
+
+Trois états sont employés pour les services : « activer », « desactiver » et « supprimer ». La suppression est logique : la ligne n’est pas effacée, son statut devient « supprimer ». Ce choix conserve les relations avec d’anciennes réservations.
+
+5.8 Traitement administratif des réservations
+
+L’administrateur voit toutes les réservations, le numéro de réservation, le client, son e-mail, le service, la date et le statut. Une réservation « en attente » peut être acceptée ou refusée. Un message est obligatoire. Avant la mise à jour, le code relit le statut et refuse l’opération si la réservation a déjà été traitée. Le statut devient exactement « accepter » ou « refuser », puis le message et sa date sont enregistrés. L’identifiant de rôle 2 est attaché au message.
+
+======================================================================
+6. RÈGLES DE GESTION DÉDUITES DU CODE
+======================================================================
+
+RG01. Une adresse électronique ne peut appartenir qu’à un seul utilisateur.
+RG02. Tout utilisateur possède exactement un rôle.
+RG03. Les deux rôles initialement prévus sont client et administrateur.
+RG04. Seul un utilisateur authentifié peut envoyer une réservation.
+RG05. Une réservation appartient à un seul utilisateur et concerne un seul service.
+RG06. Un utilisateur peut effectuer plusieurs réservations.
+RG07. Un service peut être associé à plusieurs réservations.
+RG08. Chaque réservation possède un numéro unique.
+RG09. Toute nouvelle réservation prend le statut « en attente ».
+RG10. Seul un service actif peut être sélectionné pour une nouvelle réservation.
+RG11. Seul l’administrateur peut accéder à l’administration.
+RG12. Une réservation ne peut être acceptée ou refusée par l’interface que si elle est encore en attente.
+RG13. L’acceptation ou le refus exige un message adressé au client.
+RG14. Une réservation peut techniquement posséder plusieurs messages dans le modèle, même si le flux actuel n’en crée normalement qu’un lors du traitement.
+RG15. Les services désactivés ou supprimés logiquement restent en base, mais ne sont pas visibles dans le catalogue client.
+RG16. Un client ne consulte que les réservations liées à son identifiant de session.
+
+======================================================================
+7. ARCHITECTURE TECHNIQUE ET ARBORESCENCE
+======================================================================
+
+Technologies constatées :
+- PHP procédural côté serveur ;
+- MySQL pour les données ;
+- PDO pour la connexion et les requêtes ;
+- HTML5 pour la structure des pages et formulaires ;
+- CSS pour la présentation et l’adaptation visuelle ;
+- sessions PHP pour l’état d’authentification ;
+- SQL pour la création du schéma ;
+- modèle conceptuel conservé dans des fichiers Looping (.loo et .lo1).
+
+Il n’existe dans le dépôt ni framework PHP, ni JavaScript applicatif, ni gestionnaire de dépendances Composer, ni suite de tests automatisés, ni configuration Docker.
+
+Arborescence utile :
+projet2/
+|-- index.php                         page d’accueil
+|-- README.md                         fichier très sommaire
+|-- DOCUMENTATION_PROJET.md           documentation technique existante
+|-- annexe/
+|   |-- creation_tables.sql           création et initialisation de MySQL
+|   |-- Looping1.loo                  fichier de modélisation Looping
+|   `-- Looping1.lo1                  fichier de modélisation Looping
+|-- assets/
+|   |-- css/style.css                 feuille de style globale
+|   `-- img/                          images de l’interface et des services
+|-- config/database.php               connexion PDO à MySQL
+|-- includes/
+|   |-- header.php                    début HTML, en-tête et navigation
+|   `-- footer.php                    pied de page et fermeture HTML
+`-- pages/
+    |-- admin.php                     administration
+    |-- connexion.php                 authentification
+    |-- contact.php                   coordonnées
+    |-- deconnexion.php               fin de session
+    |-- inscription.php               création de compte
+    |-- reservation.php               création et suivi des réservations
+    `-- services.php                  catalogue actif
+
+Organisation logique :
+- couche de présentation : fichiers HTML/PHP et style.css ;
+- logique applicative : traitements POST et contrôles écrits directement en haut des pages PHP ;
+- accès aux données : requêtes PDO également placées dans les pages ;
+- persistance : base MySQL « mylavage ».
+
+Il s’agit donc d’une architecture simple en pages, avec séparation partielle des éléments communs, mais pas d’une architecture MVC complète.
+
+======================================================================
+8. BASE DE DONNÉES ET MODÈLE RELATIONNEL
+======================================================================
+
+Nom de la base : mylavage.
+Script : annexe/creation_tables.sql.
+
+Table roles :
+- id_role BIGINT, clé primaire, auto-incrémentée ;
+- description VARCHAR(50).
+Données initiales : (1, « utilisateur simple »), (2, « administrateur »).
+
+Table utilisateur :
+- id_utilisateur BIGINT, clé primaire, auto-incrémentée ;
+- nom VARCHAR(50), obligatoire ;
+- prenom VARCHAR(50), facultatif ;
+- email VARCHAR(50), obligatoire et unique ;
+- password VARCHAR(255), prévu pour le hash ;
+- id_role BIGINT, obligatoire, clé étrangère vers roles.
+
+Table service :
+- id_service INT, clé primaire, auto-incrémentée ;
+- nom_service VARCHAR(50), obligatoire ;
+- description VARCHAR(100), obligatoire ;
+- prix DECIMAL(15,2), obligatoire ;
+- duree INT, obligatoire, exprimée en minutes dans l’interface ;
+- image_service VARCHAR(255), facultatif dans le schéma ;
+- statut VARCHAR(50), obligatoire, valeur par défaut « activer ».
+
+Services d’exemple insérés par le script :
+- Lavage Extérieur : 30,00 ; durée 30 minutes ;
+- Lavage Intérieur : 30,00 ; durée 45 minutes ;
+- Lavage Moteur : 50,00 ; durée 45 minutes.
+L’interface affiche le symbole $, mais la devise exacte doit être confirmée dans la monographie.
+
+Table reservation :
+- id_reservation BIGINT, clé primaire, auto-incrémentée ;
+- date_reservation DATETIME, obligatoire ;
+- statut VARCHAR(50), obligatoire ;
+- numreservation VARCHAR(50), obligatoire et unique ;
+- id_service INT, obligatoire, clé étrangère vers service ;
+- id_utilisateur BIGINT, obligatoire, clé étrangère vers utilisateur.
+
+Table message :
+- id_message BIGINT, clé primaire, auto-incrémentée ;
+- contenu TEXT, obligatoire ;
+- date_message DATETIME ;
+- id_reservation BIGINT, obligatoire, clé étrangère vers reservation ;
+- id_role BIGINT, obligatoire, clé étrangère vers roles.
+
+Cardinalités déduites :
+- un rôle est attribué à zéro ou plusieurs utilisateurs ; un utilisateur a un rôle ;
+- un utilisateur effectue zéro ou plusieurs réservations ; une réservation appartient à un utilisateur ;
+- un service concerne zéro ou plusieurs réservations ; une réservation concerne un service ;
+- une réservation possède zéro ou plusieurs messages ; un message appartient à une réservation ;
+- un rôle peut être associé à zéro ou plusieurs messages ; un message est associé à un rôle.
+
+Remarque de conception : message.id_role indique le rôle émetteur, mais pas l’utilisateur précis. Dans la version actuelle, le code fixe id_role à 2. Une évolution pourrait utiliser id_utilisateur pour identifier précisément l’auteur.
+
+======================================================================
+9. PARCOURS ET CAS D’UTILISATION
+======================================================================
+
+Parcours client nominal :
+1. ouvrir le site ;
+2. consulter la présentation et les services ;
+3. créer un compte ou se connecter ;
+4. cliquer sur « Réserver » pour un service actif ;
+5. sélectionner une date et une heure ;
+6. envoyer la réservation ;
+7. recevoir un numéro commençant par RES- ;
+8. attendre le traitement administratif ;
+9. ouvrir « Mes reservations » ;
+10. lire le statut et le message de l’administrateur.
+
+Parcours administrateur nominal :
+1. se connecter avec un compte ayant le rôle 2 ;
+2. ouvrir le lien « Admin » ;
+3. consulter ou gérer les services ;
+4. consulter les réservations dans l’ordre décroissant ;
+5. saisir un message pour une réservation en attente ;
+6. accepter ou refuser ;
+7. le système met à jour le statut et enregistre le message.
+
+Cas d’utilisation principaux à représenter dans un diagramme :
+- consulter l’accueil ;
+- consulter les services ;
+- contacter l’entreprise ;
+- s’inscrire ;
+- se connecter ;
+- se déconnecter ;
+- réserver un service ;
+- consulter ses réservations ;
+- gérer les services ;
+- consulter toutes les réservations ;
+- accepter/refuser une réservation ;
+- envoyer un message au client.
+
+======================================================================
+10. SÉCURITÉ DÉJÀ PRÉSENTE
+======================================================================
+
+- hashage des mots de passe avec password_hash et vérification avec password_verify ;
+- validation syntaxique des adresses électroniques ;
+- unicité de l’e-mail en logique applicative et en base ;
+- requêtes SQL préparées pour les valeurs fournies par les utilisateurs ;
+- affichage dynamique généralement protégé par htmlspecialchars ;
+- retrait des balises dans plusieurs entrées avec strip_tags ;
+- contrôle de session avant la réservation ;
+- contrôle du rôle avant l’administration ;
+- filtrage des réservations client par l’identifiant en session ;
+- vérification serveur qu’un service est actif avant réservation ;
+- vérification du statut avant le traitement d’une demande ;
+- clés étrangères et contraintes d’unicité dans MySQL ;
+- connexion MySQL en utf8mb4 et PDO configuré en mode exception.
+
+Les identifiants locaux de base de données présents dans le code sont volontairement omis de ce document. Ils ne doivent pas être copiés dans une monographie publique.
+
+======================================================================
+11. LIMITES ET RISQUES TECHNIQUES OBSERVÉS
+======================================================================
+
+Cette section décrit l’état actuel, sans dire que le projet est inutilisable.
+
+- Aucun jeton CSRF n’est présent sur les formulaires ; une requête forgée depuis un autre site pourrait déclencher une action si un utilisateur est connecté.
+- L’identifiant de session n’est pas régénéré après la connexion ou l’inscription, ce qui laisse un risque de fixation de session.
+- La validation des mots de passe ne fixe pas de longueur ou de robustesse minimale.
+- L’upload accepte image/* côté navigateur, mais le serveur ne vérifie pas réellement le type MIME, la taille, l’extension ni l’unicité du nom. Un fichier pourrait écraser une image portant le même nom.
+- Les chemins du menu commencent par « / ». L’application suppose donc être servie à la racine du domaine ; un déploiement dans un sous-dossier peut casser les liens et le CSS.
+- Le message détaillé de PDO est affiché lors d’une erreur de connexion, ce qui peut révéler des informations techniques en production.
+- Les paramètres de connexion sont écrits directement dans config/database.php au lieu de variables d’environnement.
+- Les valeurs de statut sont des chaînes libres et non des ENUM, contraintes CHECK ou constantes centralisées.
+- Le prix et la durée sont seulement vérifiés comme champs non vides ; les valeurs négatives ne sont pas explicitement refusées côté serveur.
+- Aucune vérification n’interdit une réservation dans le passé.
+- Aucune règle n’empêche deux clients de demander le même créneau. L’administrateur doit résoudre ce conflit manuellement.
+- L’acceptation et l’insertion du message ne sont pas regroupées dans une transaction. Une panne entre les deux requêtes pourrait laisser un statut changé sans message.
+- La vérification « encore en attente » et la mise à jour ne sont pas atomiques, donc deux requêtes administratives concurrentes constituent un cas limite.
+- Le numéro produit par uniqid n’est pas un identifiant cryptographiquement aléatoire, même si la contrainte UNIQUE réduit le risque de doublon.
+- Après la connexion, session_regenerate_id(true) n’est pas appelé.
+- Pas de limitation des tentatives de connexion, de CAPTCHA ou de journalisation d’audit.
+- Pas de récupération de mot de passe ni de vérification de l’e-mail.
+- Pas de pagination : une grande quantité de services ou de réservations alourdirait les pages.
+- Dans la page client, les messages sont chargés par une requête séparée pour chaque réservation (problème dit N+1).
+- La page admin regroupe de nombreuses responsabilités dans un seul fichier.
+- Le projet ne contient pas de tests automatisés ni de pipeline d’intégration continue documenté.
+- Les attributs alt des images sont souvent vides ; l’accessibilité peut être améliorée.
+- Le modèle ne gère pas explicitement le type de véhicule, l’adresse du lavage, la capacité d’un créneau, les horaires d’ouverture ni le paiement.
+- Le champ message référence un rôle et non l’utilisateur auteur.
+- La devise affichée « $ » doit être confirmée et idéalement centralisée.
+
+======================================================================
+12. AMÉLIORATIONS RECOMMANDÉES
+======================================================================
+
+Priorité sécurité : ajouter des jetons CSRF, régénérer la session, protéger les cookies (HttpOnly, Secure, SameSite), valider fortement les uploads, stocker la configuration dans l’environnement, remplacer les messages d’erreur techniques par des messages neutres et ajouter une limitation des connexions.
+
+Priorité métier : interdire les dates passées, définir les horaires d’ouverture, gérer les conflits de créneau, ajouter le type de véhicule, permettre l’annulation contrôlée et envoyer des notifications par e-mail ou SMS/WhatsApp.
+
+Priorité données : ajouter des contraintes sur les statuts, le prix et la durée ; prévoir created_at/updated_at ; identifier l’auteur exact d’un message ; envisager une table de créneaux ; utiliser des transactions lors du traitement administratif.
+
+Priorité architecture : séparer contrôleurs, services, vues et accès aux données ; centraliser la validation et les constantes ; adopter Composer et l’autoloading ; prévoir une configuration adaptée au sous-dossier ou une URL de base.
+
+Priorité qualité : créer des tests unitaires et fonctionnels, un jeu de données de test, des scénarios de recette, une journalisation, une pagination et une documentation d’installation complète.
+
+Priorité interface : corriger les accents et libellés, enrichir les textes alternatifs, améliorer la navigation mobile, afficher clairement la devise et la durée, fournir des confirmations avant actions sensibles et des badges visuels pour les statuts.
+
+======================================================================
+13. TESTS À PRÉSENTER OU À RÉALISER
+======================================================================
+
+Aucun rapport de test formel n’est présent dans le dépôt. La monographie ne doit donc pas affirmer sans preuve que tous ces tests ont été exécutés. Ils constituent une proposition de plan de recette :
+
+- inscription avec données valides ;
+- refus d’un e-mail invalide ;
+- refus d’un e-mail déjà utilisé ;
+- refus lorsque les mots de passe diffèrent ;
+- connexion correcte et incorrecte ;
+- redirection d’un visiteur qui ouvre la réservation ;
+- impossibilité pour un client d’ouvrir l’administration ;
+- affichage des seuls services actifs ;
+- création d’une réservation sur un service actif ;
+- refus d’un service inexistant ou désactivé ;
+- présence d’un numéro de réservation unique ;
+- isolation des réservations entre deux clients ;
+- ajout et modification d’un service par l’administrateur ;
+- disparition du catalogue après désactivation logique ;
+- acceptation avec message ;
+- refus avec message ;
+- refus d’une réponse sans message ;
+- impossibilité de traiter deux fois la même réservation ;
+- affichage du message à son client ;
+- déconnexion et interdiction des pages protégées après déconnexion ;
+- essais sur ordinateur et mobile ;
+- essais d’entrées HTML/JavaScript et de caractères spéciaux ;
+- essais d’upload non autorisé et de fichier trop volumineux après sécurisation.
+
+Pour chaque cas de test, la monographie peut utiliser un tableau : numéro, objectif, précondition, données, étapes, résultat attendu, résultat obtenu, statut. La colonne « résultat obtenu » doit être remplie seulement après exécution réelle.
+
+======================================================================
+14. PROPOSITION DE STRUCTURE DE MONOGRAPHIE
+======================================================================
+
+Pages préliminaires : page de garde, épigraphe éventuelle, dédicace, remerciements, liste des sigles, liste des figures et tableaux, résumé, abstract, table des matières. Toutes les données personnelles et institutionnelles sont [À COMPLÉTER].
+
+Introduction générale : contexte, état de la question [À RECHERCHER], problématique, hypothèse, objectifs, choix et intérêt, méthodes et techniques [À CONFIRMER], délimitation spatio-temporelle [À COMPLÉTER], subdivision du travail.
+
+Chapitre I – Cadre conceptuel et étude de l’existant : application web, client-serveur, base de données, réservation, authentification, rôles, entreprise de lavage ; présentation de l’organisation [À COMPLÉTER] ; fonctionnement avant informatisation [À COMPLÉTER] ; difficultés et critique ; solution proposée.
+
+Chapitre II – Analyse et conception : acteurs, besoins fonctionnels et non fonctionnels, règles de gestion, diagramme de contexte, cas d’utilisation, scénarios, modèle conceptuel de données, modèle logique, dictionnaire de données et architecture.
+
+Chapitre III – Réalisation et mise en œuvre : environnement de développement [À COMPLÉTER], technologies, organisation des fichiers, création de la base, connexion PDO, sessions, inscription, connexion, catalogue, réservation, administration, sécurité, présentation des interfaces par captures d’écran et tests.
+
+Conclusion générale : rappel de la problématique, synthèse de la solution effectivement réalisée, degré d’atteinte des objectifs, limites et perspectives.
+
+Annexes possibles : script SQL, MCD/MLD Looping, extraits de code significatifs, guide d’installation, guide utilisateur, plan de tests et captures d’écran.
+
+======================================================================
+15. CAPTURES ET FIGURES À AJOUTER
+======================================================================
+
+- Figure 1 : architecture générale navigateur – serveur PHP – MySQL.
+- Figure 2 : diagramme des cas d’utilisation.
+- Figure 3 : modèle conceptuel des cinq entités.
+- Figure 4 : modèle logique/relationnel.
+- Capture 1 : page d’accueil.
+- Capture 2 : catalogue des services.
+- Capture 3 : formulaire d’inscription.
+- Capture 4 : formulaire de connexion.
+- Capture 5 : création d’une réservation.
+- Capture 6 : suivi des réservations du client.
+- Capture 7 : gestion administrative des services.
+- Capture 8 : traitement d’une réservation.
+
+Ne pas inventer ces captures : les produire à partir d’une installation fonctionnelle.
+
+======================================================================
+16. INSTALLATION DÉDUITE DU PROJET
+======================================================================
+
+Pré-requis probables : serveur web avec PHP, extension PDO MySQL et serveur MySQL/MariaDB. Aucun numéro de version minimal n’est documenté.
+
+Étapes générales :
+1. placer le projet dans le répertoire servi par le serveur web, de préférence à la racine en raison des liens absolus ;
+2. démarrer le serveur web et MySQL ;
+3. exécuter annexe/creation_tables.sql ;
+4. adapter localement config/database.php sans publier les identifiants ;
+5. ouvrir index.php dans le navigateur ;
+6. créer un client via l’interface ;
+7. pour obtenir un administrateur, créer un utilisateur puis modifier son id_role à 2 en base, car le script ne fournit pas de compte admin initial documenté.
+
+La dernière étape est une déduction du schéma et du code. Elle doit être remplacée par une procédure sécurisée dans une version destinée à la production.
+
+======================================================================
+17. DONNÉES QUI MANQUENT ET DOIVENT ÊTRE FOURNIES PAR L’ÉTUDIANT
+======================================================================
+
+- nom complet de l’auteur ;
+- établissement, faculté/département, filière, niveau et année académique ;
+- titre officiel imposé par l’établissement ;
+- nom du directeur/encadreur ;
+- contexte géographique et présentation réelle de MY LAVAGE ;
+- historique, mission, vision et organisation de l’entreprise ;
+- processus réellement utilisé avant l’application ;
+- personnes interrogées, méthode, technique et dates de collecte, si une étude a été faite ;
+- calendrier réel de développement ;
+- logiciels et versions réellement utilisés (éditeur, PHP, MySQL, serveur, navigateur, Looping) ;
+- matériel utilisé ;
+- budget ou estimation des coûts, si exigé ;
+- devise et politique tarifaire ;
+- coordonnées à publier ;
+- preuves de tests et résultats obtenus ;
+- environnement de déploiement, s’il existe ;
+- difficultés rencontrées personnellement et solutions adoptées ;
+- références bibliographiques selon la norme demandée.
+
+======================================================================
+18. GLOSSAIRE
+======================================================================
+
+Application web : logiciel utilisé au moyen d’un navigateur et dont une partie du traitement est effectuée sur un serveur.
+PHP : langage exécuté côté serveur et utilisé ici pour la logique des pages.
+MySQL : système de gestion de base de données relationnelle.
+PDO : interface PHP d’accès aux bases de données, utilisée ici avec des requêtes préparées.
+Session : mécanisme serveur permettant de conserver l’identité et le rôle d’un utilisateur entre plusieurs requêtes.
+Authentification : vérification de l’identité d’un utilisateur à partir de son e-mail et de son mot de passe.
+Autorisation : vérification des actions permises selon le profil, notamment l’accès administrateur.
+Hashage : transformation irréversible utilisée pour ne pas stocker un mot de passe en clair.
+Clé primaire : attribut identifiant de façon unique une ligne.
+Clé étrangère : attribut créant une relation avec la clé d’une autre table.
+Réservation : demande d’un client pour recevoir un service à une date et une heure données.
+Suppression logique : conservation d’une ligne en base avec un statut indiquant qu’elle ne doit plus être utilisée ou affichée.
+CSRF : attaque poussant un utilisateur connecté à envoyer une requête non désirée ; des jetons dédiés permettent de la réduire.
+XSS : injection de contenu interprété par le navigateur ; htmlspecialchars contribue à protéger les sorties.
+
+======================================================================
+19. SYNTHÈSE FINALE
+======================================================================
+
+MY LAVAGE est une application web de gestion de services et de réservations réalisée en PHP et MySQL. Elle distingue les visiteurs, les clients authentifiés et les administrateurs. Son modèle contient les rôles, utilisateurs, services, réservations et messages. Le flux métier principal est complet à l’échelle d’un projet pédagogique : publication d’un service, réservation client, décision administrative et retour visible au client.
+
+Ses points forts sont la clarté du parcours, le hashage des mots de passe, les requêtes préparées, les contrôles d’accès par session et rôle, l’isolation des réservations client, les clés étrangères et la suppression logique des services. Ses principales limites concernent la protection CSRF, les sessions, la validation des uploads et des données métier, les conflits de créneaux, les transactions, la configuration de production et l’absence de tests automatisés.
+
+La monographie doit présenter honnêtement cette version comme une solution fonctionnelle de centralisation et de suivi, puis transformer ses limites en perspectives d’évolution. Elle ne doit pas inventer un terrain d’enquête, des résultats de test, un déploiement ou des informations institutionnelles absentes du dépôt.
+
+FIN DU DOSSIER
